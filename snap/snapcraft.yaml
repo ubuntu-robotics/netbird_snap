@@ -1,7 +1,7 @@
 name: netbird
 base: core22
-version: '0'
 summary: netbird
+adopt-info: netbird
 description: |
   Connect all the interfaces.
   Restart netbird.
@@ -13,6 +13,7 @@ confinement: strict
 parts:
   netbird:
     plugin: go
+    source: https://github.com/netbirdio/netbird.git
     build-snaps: [go]
     build-packages:
       - libayatana-appindicator3-dev
@@ -25,7 +26,13 @@ parts:
       - libxrandr-dev
       - libxxf86vm-dev
       - pkg-config
-    source: https://github.com/netbirdio/netbird.git
+    override-pull: |
+      craftctl default
+      git config --global --add safe.directory '*'
+      version="$(git describe --always --tags| sed -e 's/^v//;s/-/+git/;y/-/./')"
+      [ -n "$(echo $version | grep "+git")" ] && grade=devel || grade=stable
+      craftctl set version="$version"
+      craftctl set grade="$grade"
 
 apps:
   client:
