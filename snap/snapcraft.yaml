@@ -2,6 +2,7 @@ name: netbird
 base: core22
 summary: netbird
 adopt-info: netbird
+license: BSD-3-Clause
 description: |
   Connect all the interfaces.
   Restart netbird.
