@@ -1,0 +1,43 @@
+name: netbird
+base: core22
+version: '0'
+summary: netbird
+description: |
+  Connect all the interfaces.
+  Restart netbird.
+  netbird.client up
+
+grade: devel
+confinement: strict
+
+parts:
+  netbird:
+    plugin: go
+    build-snaps: [go]
+    build-packages:
+      - libayatana-appindicator3-dev
+      - libgl1-mesa-dev
+      - libglx-dev
+      - libx11-dev
+      - libxcursor-dev
+      - libxi-dev
+      - libxinerama-dev
+      - libxrandr-dev
+      - libxxf86vm-dev
+      - pkg-config
+    source: https://github.com/netbirdio/netbird.git
+
+apps:
+  client:
+    command: bin/client --daemon-addr unix://$SNAP_DATA/netbird.sock --log-file $SNAP_DATA/client.log -c $SNAP_DATA/config.json
+
+  service:
+    command: bin/client service run --daemon-addr unix://$SNAP_DATA/netbird.sock --log-file $SNAP_DATA/client.log -c $SNAP_DATA/config.json
+    daemon: simple
+    plugs:
+      - network
+      - network-bind
+      - network-control
+      - firewall-control
+      - ppp
+
