@@ -4,9 +4,20 @@ summary: netbird
 adopt-info: netbird
 license: BSD-3-Clause
 description: |
-  Connect all the interfaces.
-  Restart netbird.
-  netbird.client up
+  NetBird combines a configuration-free peer-to-peer
+  private network and a centralized access control
+  system in a single platform, making it easy to create
+  secure private networks for your organization or home.
+
+  Quickstart:
+
+  snap connect netbird:firewall-control
+  snap connect netbird:network-control
+  snap connect netbird:ppp
+
+  snap restart netbird
+
+  netbird up
 
 grade: devel
 confinement: strict
