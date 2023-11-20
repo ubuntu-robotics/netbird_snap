@@ -11,6 +11,12 @@ description: |
 grade: devel
 confinement: strict
 
+layout:
+  /etc/netbird:
+    bind: $SNAP_COMMON
+  /var/log/netbird/client.log:
+    bind-file: $SNAP_COMMON/client.log
+
 parts:
   netbird:
     plugin: go
@@ -29,18 +35,28 @@ parts:
       - pkg-config
     override-pull: |
       craftctl default
+
+      # set version and grade from code
       git config --global --add safe.directory '*'
       version="$(git describe --always --tags| sed -e 's/^v//;s/-/+git/;y/-/./')"
       [ -n "$(echo $version | grep "+git")" ] && grade=devel || grade=stable
       craftctl set version="$version"
       craftctl set grade="$grade"
+    override-build: |
+      # Change default socket location
+      for entry in client/cmd/root.go client/ui/client_ui.go; do
+        sed -i "s|unix:///var/run/netbird.sock|unix:///var/snap/netbird/common/netbird.sock|" "$entry"
+      done
+
+      craftctl default
+
 
 apps:
-  client:
-    command: bin/client --daemon-addr unix://$SNAP_DATA/netbird.sock --log-file $SNAP_DATA/client.log -c $SNAP_DATA/config.json
+  netbird:
+    command: bin/netbird
 
-  service:
-    command: bin/client service run --daemon-addr unix://$SNAP_DATA/netbird.sock --log-file $SNAP_DATA/client.log -c $SNAP_DATA/config.json
+  service-run:
+    command: bin/client service run
     daemon: simple
     plugs:
       - network
