@@ -50,13 +50,31 @@ parts:
 
       craftctl default
 
+      # Setup bash completion
+      mkdir -p $CRAFT_PART_INSTALL/etc/bash_completion.d/
+      $CRAFT_PART_INSTALL/bin/client completion bash > $CRAFT_PART_INSTALL/etc/bash_completion.d/snap.netbird.netbird
+      sed -i "s|__start_netbird netbird|__start_netbird netbird netbird.netbird|" $CRAFT_PART_INSTALL/etc/bash_completion.d/snap.netbird.netbird
+    override-prime: |
+      craftctl default
+
+      # # Setup bash completion
+      # mkdir -p $CRAFT_PRIME/etc/bash_completion.d/
+      # $CRAFT_PRIME/bin/client completion bash > $CRAFT_PRIME/etc/bash_completion.d/snap.netbird
+      # # sed -i "s|__start_netbird netbird|__start_netbird netbird |" $CRAFT_PRIME/etc/bash_completion.d/snap.netbird.netbird
+      # rm -f netbird
+      # ln -s bin/client netbird
+    organize:
+      bin/client: bin/netbird
+    stage:
+      - bin/netbird
+      - etc/bash_completion.d
 
 apps:
   netbird:
     command: bin/netbird
 
   service-run:
-    command: bin/client service run
+    command: bin/netbird service run
     daemon: simple
     plugs:
       - network
