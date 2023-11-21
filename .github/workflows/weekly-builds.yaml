@@ -71,10 +71,10 @@ jobs:
         name: netbird-snaps
         path: .
     - name: Get snap filename
-      run: echo "SNAPFILE=$(ls *${{ matrix.architectrues }}.snap)" >> $GITHUB_ENV
+      run: echo "SNAPFILE=$(ls *${{ matrix.architectures }}.snap)" >> $GITHUB_ENV
     - uses: snapcore/action-publish@v1
       env:
         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
       with:
-        snap: ${{ env.SNAPFILE }}
+        snap: ./netbird_*_${{ matrix.architectures }}.snap
         release: edge
