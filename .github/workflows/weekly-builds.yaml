@@ -57,7 +57,7 @@ jobs:
         name: Upload the snap as artifact
         with:
           name: netbird-snaps
-          path: *.snap
+          path: ./*.snap
 
   ros-publish:
     if: github.ref == 'refs/heads/main'
