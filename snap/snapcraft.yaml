@@ -29,6 +29,10 @@ description: |
 grade: devel
 confinement: strict
 
+architectures:
+  - build-on: [amd64]
+  - build-on: [arm64]
+
 layout:
   /etc/netbird:
     bind: $SNAP_COMMON
