@@ -24,7 +24,7 @@ description: |
     snap set netbird service-run-arguments="--log-level debug"
 
 
-  Netbird log, config and socket files are stored in /var/snap/common
+  NetBird log, config and socket files are stored in /var/snap/netbird/common
 
 grade: devel
 confinement: strict
