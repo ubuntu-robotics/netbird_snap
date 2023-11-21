@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+# restart the netbird service on configuration change
+snapctl restart "$SNAP_INSTANCE_NAME.service-run"

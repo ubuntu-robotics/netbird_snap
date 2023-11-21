@@ -19,6 +19,13 @@ description: |
 
   netbird up
 
+  Additionally, one might provide additional arguments to the service-run:
+
+    snap set netbird service-run-arguments="--log-level debug"
+
+
+  Netbird log, config and socket files are stored in /var/snap/common
+
 grade: devel
 confinement: strict
 
@@ -70,13 +77,19 @@ parts:
       - bin/netbird
       - etc/bash_completion.d
 
+  local-files:
+    plugin: dump
+    source: snap/local/
+    organize:
+      '*.bash': bin/
+
 apps:
   netbird:
     command: bin/netbird
     completer: etc/bash_completion.d/snap.netbird
 
   service-run:
-    command: bin/netbird service run
+    command: bin/netbird_service_launcher.bash
     daemon: simple
     plugs:
       - network
@@ -84,4 +97,3 @@ apps:
       - network-control
       - firewall-control
       - ppp
-
