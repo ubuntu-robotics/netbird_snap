@@ -18,7 +18,6 @@ jobs:
     name: Remote build snaps
     runs-on: [ubuntu-latest]
     env:
-      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT7_CREDS }}
       # snapcraft remote-build will create a repository with the name decided by the --build-id arg
       # URL to this repo echoed below to help debug builds (does not change if the workflow is re-run)
       SNAPCRAFT_BUILDER_ID: ${{ github.run_id }}
@@ -35,7 +34,7 @@ jobs:
           echo "Building at: https://git.launchpad.net/~ce-certification-qa/+snap/$SNAPCRAFT_BUILDER_ID"
       - uses: snapcore/action-build@v1
         with:
-          snapcraft-args: "remote-build --launchpad-accept-public-upload --build-id ${{ matrix.snap_names }}-${SNAPCRAFT_BUILDER_ID}"
+          snapcraft-args: "remote-build --launchpad-accept-public-upload --build-id netbird-${SNAPCRAFT_BUILDER_ID}"
       - name: check number of built snaps
         run: |
           count_txt_files=$(find . -type f -name 'netbird-*.txt' | wc -l)
