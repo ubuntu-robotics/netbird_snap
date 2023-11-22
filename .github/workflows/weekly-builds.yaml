@@ -77,4 +77,4 @@ jobs:
         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
       with:
         snap: ${{ env.SNAPFILE }}
-        release: beta
+        release: beta # TODO replace by a stable release after proper testing
