@@ -2,7 +2,8 @@
 The [NetBird](https://github.com/netbirdio/netbird) client as a snap.
 NetBird combines a configuration-free peer-to-peer private network and a centralized access control system in a single platform, making it easy to create secure private networks for your organization or home.
 
-The snap is currently in `beta` waiting for your feedback.
+The snap is currently in `beta` while further testing is performed and more feedback is collected.
+Please do feel free to install and test the snap for yourself and possibly provide us with said feedback.
 
 ## How to install
 First, [make sure you have `snapd` installed.](https://snapcraft.io/docs/installing-snap-on-ubuntu)
