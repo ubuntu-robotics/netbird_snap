@@ -1,0 +1,103 @@
+name: netbird
+base: core22
+summary: netbird
+adopt-info: netbird
+license: BSD-3-Clause
+description: |
+  NetBird combines a configuration-free peer-to-peer
+  private network and a centralized access control
+  system in a single platform, making it easy to create
+  secure private networks for your organization or home.
+
+  Quickstart:
+
+  snap connect netbird:firewall-control
+  snap connect netbird:network-control
+  snap connect netbird:ppp
+
+  snap restart netbird
+
+  netbird up
+
+  Additionally, one might provide additional arguments to the service-run:
+
+    snap set netbird service-run-arguments="--log-level debug"
+
+
+  NetBird log, config and socket files are stored in /var/snap/netbird/common
+
+grade: devel
+confinement: strict
+
+architectures:
+  - build-on: [amd64]
+  - build-on: [arm64]
+
+layout:
+  /etc/netbird:
+    bind: $SNAP_COMMON
+  /var/log/netbird/client.log:
+    bind-file: $SNAP_COMMON/client.log
+
+parts:
+  netbird:
+    plugin: go
+    source: https://github.com/netbirdio/netbird.git
+    build-snaps: [go]
+    build-packages:
+      - libayatana-appindicator3-dev
+      - libgl1-mesa-dev
+      - libglx-dev
+      - libx11-dev
+      - libxcursor-dev
+      - libxi-dev
+      - libxinerama-dev
+      - libxrandr-dev
+      - libxxf86vm-dev
+      - pkg-config
+    override-pull: |
+      craftctl default
+
+      # set version and grade from code
+      git config --global --add safe.directory '*'
+      version="$(git describe --always --tags| sed -e 's/^v//;s/-/+git/;y/-/./')"
+      [ -n "$(echo $version | grep "+git")" ] && grade=devel || grade=stable
+      craftctl set version="$version"
+      craftctl set grade="$grade"
+    override-build: |
+      # Change default socket location
+      for entry in client/cmd/root.go client/ui/client_ui.go; do
+        sed -i "s|unix:///var/run/netbird.sock|unix:///var/snap/netbird/common/netbird.sock|" "$entry"
+      done
+
+      craftctl default
+
+      # Setup bash completion
+      mkdir -p $CRAFT_PART_INSTALL/etc/bash_completion.d/
+      $CRAFT_PART_INSTALL/bin/client completion bash > $CRAFT_PART_INSTALL/etc/bash_completion.d/snap.netbird
+    organize:
+      bin/client: bin/netbird
+    stage:
+      - bin/netbird
+      - etc/bash_completion.d
+
+  local-files:
+    plugin: dump
+    source: snap/local/
+    organize:
+      '*.bash': bin/
+
+apps:
+  netbird:
+    command: bin/netbird
+    completer: etc/bash_completion.d/snap.netbird
+
+  service-run:
+    command: bin/netbird_service_launcher.bash
+    daemon: simple
+    plugs:
+      - network
+      - network-bind
+      - network-control
+      - firewall-control
+      - ppp

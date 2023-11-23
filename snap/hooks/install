@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+# optional parameter to be set by the user
+snapctl set service-run-arguments!
