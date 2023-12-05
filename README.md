@@ -12,16 +12,6 @@ Install the snap:
 ```
 sudo snap install netbird --beta
 ```
-Connect the snapd interfaces:
-```
-sudo snap connect netbird:firewall-control
-sudo snap connect netbird:network-control
-sudo snap connect netbird:ppp
-```
-Restart the netbird service:
-```
-sudo snap restart netbird
-```
 ## How to use
 Once the installation process done, you can connect your NetBird snap client with:
 ```
