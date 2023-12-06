@@ -11,12 +11,6 @@ description: |
 
   Quickstart:
 
-  snap connect netbird:firewall-control
-  snap connect netbird:network-control
-  snap connect netbird:ppp
-
-  snap restart netbird
-
   netbird up
 
   Additionally, one might provide additional arguments to the service-run:
