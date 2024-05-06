@@ -33,6 +33,8 @@ jobs:
         run: |
           echo "Building at: https://git.launchpad.net/~ce-certification-qa/+snap/$SNAPCRAFT_BUILDER_ID"
       - uses: snapcore/action-build@v1
+        env:
+          SNAPCRAFT_REMOTE_BUILD_STRATEGY: force-fallback
         with:
           snapcraft-args: "remote-build --launchpad-accept-public-upload --build-id netbird-${SNAPCRAFT_BUILDER_ID}"
       - name: check number of built snaps
