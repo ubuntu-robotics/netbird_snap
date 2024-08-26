@@ -29,14 +29,12 @@ jobs:
           echo '${{ secrets.LP_CREDS }}' > ~/.local/share/snapcraft/provider/launchpad/credentials
           git config --global user.email "canonical-robotics-brand@canonical.com"
           git config --global user.name "Canonical robotics"
-      - name: Print Launchpad build repository
-        run: |
-          echo "Building at: https://git.launchpad.net/~ce-certification-qa/+snap/$SNAPCRAFT_BUILDER_ID"
-      - uses: snapcore/action-build@v1
+      - name: snapcraft
         env:
           SNAPCRAFT_REMOTE_BUILD_STRATEGY: force-fallback
-        with:
-          snapcraft-args: "remote-build --launchpad-accept-public-upload --build-id netbird-${SNAPCRAFT_BUILDER_ID}"
+        run: |
+          sudo snap install snapcraft --classic
+          snapcraft remote-build --launchpad-accept-public-upload --build-id netbird-${{ env.SNAPCRAFT_BUILDER_ID }}
       - name: check number of built snaps
         run: |
           count_txt_files=$(find . -type f -name 'netbird_*.txt' | wc -l)
