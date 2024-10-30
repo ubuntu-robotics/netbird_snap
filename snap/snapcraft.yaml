@@ -3,6 +3,9 @@ base: core22
 summary: netbird
 adopt-info: netbird
 license: BSD-3-Clause
+website: https://netbird.io/
+source-code: https://github.com/ubuntu-robotics/netbird_snap
+issues: https://github.com/ubuntu-robotics/netbird_snap/issues
 contact: support@netbird.io
 description: |
   NetBird combines a configuration-free peer-to-peer
