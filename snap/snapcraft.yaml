@@ -24,7 +24,6 @@ description: |
 
   NetBird log, config and socket files are stored in /var/snap/netbird/common
 
-grade: devel
 confinement: strict
 
 architectures:
@@ -56,12 +55,15 @@ parts:
     override-pull: |
       craftctl default
 
-      # set version and grade from code
+      # Checkout latest tagged version
       git config --global --add safe.directory '*'
+      latest_tag=$(git describe --tags)
+      echo "Checking out ${latest_tag}"
+      git checkout "${latesttag}"
+      # set version and grade from code
       version="$(git describe --always --tags| sed -e 's/^v//;s/-/+git/;y/-/./')"
-      [ -n "$(echo $version | grep "+git")" ] && grade=devel || grade=stable
       craftctl set version="$version"
-      craftctl set grade="$grade"
+      craftctl set grade="stable"
     override-build: |
       # Change default socket location
       for entry in client/cmd/root.go client/ui/client_ui.go; do
