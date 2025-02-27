@@ -59,7 +59,7 @@ parts:
       git config --global --add safe.directory '*'
       latest_tag=$(git describe --tags)
       echo "Checking out ${latest_tag}"
-      git checkout "${latesttag}"
+      git checkout "${latest_tag}"
       # set version and grade from code
       version="$(git describe --always --tags| sed -e 's/^v//;s/-/+git/;y/-/./')"
       craftctl set version="$version"
