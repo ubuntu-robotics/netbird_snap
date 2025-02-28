@@ -40,6 +40,7 @@ parts:
   netbird:
     plugin: go
     source: https://github.com/netbirdio/netbird.git
+    source-tag: "v0.37.1"
     build-snaps: [go]
     build-packages:
       - libayatana-appindicator3-dev
@@ -57,11 +58,8 @@ parts:
 
       # Checkout latest tagged version
       git config --global --add safe.directory '*'
-      latest_tag=$(git describe --tags)
-      echo "Checking out ${latest_tag}"
-      git checkout "${latest_tag}"
       # set version and grade from code
-      version="$(git describe --always --tags| sed -e 's/^v//;s/-/+git/;y/-/./')"
+      version="$(git describe --always --tags| sed -e 's/^v//;y/-/./')"
       craftctl set version="$version"
       craftctl set grade="stable"
     override-build: |
