@@ -1,8 +1,6 @@
-name: Weekly builds
+name: snap
 
 on:
-  schedule:
-    - cron: '0 0 * * 0'
   push:
     tags:
       - '*'
