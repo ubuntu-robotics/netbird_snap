@@ -1,8 +1,6 @@
-name: Weekly builds
+name: snap
 
 on:
-  schedule:
-    - cron: '0 0 * * 0'
   push:
     tags:
       - '*'
@@ -22,7 +20,7 @@ jobs:
       # URL to this repo echoed below to help debug builds (does not change if the workflow is re-run)
       SNAPCRAFT_BUILDER_ID: ${{ github.run_id }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Add LP credentials
         run: |
           mkdir -p ~/.local/share/snapcraft/provider/launchpad/
@@ -43,7 +41,7 @@ jobs:
             echo "Error: The number of '.txt' files and '.snap' files do not match."
             exit 1
           fi
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         name: Upload snapcraft logs
         if: always()
         with:
@@ -52,7 +50,7 @@ jobs:
             /home/runner/.cache/snapcraft/log/
             /home/runner/.local/state/snapcraft/log/
             netbird-*.txt
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         name: Upload the snap as artifact
         with:
           name: netbird-snaps
@@ -66,7 +64,7 @@ jobs:
       matrix:
         architectures: [amd64, arm64]
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: netbird-snaps
         path: .
