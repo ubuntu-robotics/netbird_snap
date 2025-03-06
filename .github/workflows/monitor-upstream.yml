@@ -5,6 +5,6 @@ on:
 
 jobs:
   monitor-upstream-release:
-    uses: canonical/robotics-actions-workflows/.github/workflows/simple-upstream-monitor.yaml@main
+    uses: canonical/robotics-actions-workflows/.github/workflows/upstream-gh-tag-monitor.yaml@main
     with:
       source-repo: "netbirdio/netbird"
