@@ -1,0 +1,10 @@
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor-upstream-release:
+    uses: canonical/robotics-actions-workflows/.github/workflows/upstream-gh-tag-monitor.yaml@main
+    with:
+      source-repo: "netbirdio/netbird"
