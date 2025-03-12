@@ -1,0 +1,14 @@
+name: promote
+
+on:
+  workflow_dispatch:
+
+jobs:
+  snaps:
+    uses: canonical/robotics-actions-workflows/.github/workflows/promote.yaml@main
+    secrets:
+      snapstore-login: ${{ secrets.STORE_LOGIN }}
+    with:
+      snap: netbird
+      from-channel: 'latest/candidate'
+      to-channel: 'latest/stable'
