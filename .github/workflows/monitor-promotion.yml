@@ -1,0 +1,10 @@
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor-promotion-candidate-to-stable:
+    uses: canonical/robotics-actions-workflows/.github/workflows/channel-risk-sync-monitor.yaml@feat/sync-monitor
+    with:
+      source-repo: "netbirdio/netbird"
