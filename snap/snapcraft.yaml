@@ -68,6 +68,8 @@ parts:
         sed -i "s|unix:///var/run/netbird.sock|unix:///var/snap/netbird/common/netbird.sock|" "$entry"
       done
 
+      sed -i "s|development|$(craftctl get version)|" version/version.go
+
       craftctl default
 
       # Setup bash completion
