@@ -5,4 +5,4 @@ on:
 
 jobs:
   monitor-promotion-candidate-to-stable:
-    uses: canonical/robotics-actions-workflows/.github/workflows/channel-risk-sync-monitor.yaml@feat/sync-monitor
+    uses: canonical/robotics-actions-workflows/.github/workflows/channel-risk-sync-monitor.yaml@main
