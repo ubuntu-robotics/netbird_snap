@@ -33,8 +33,8 @@ architectures:
 layout:
   /etc/netbird:
     bind: $SNAP_COMMON
-  /var/log/netbird/client.log:
-    bind-file: $SNAP_COMMON/client.log
+  /var/log/netbird:
+    bind: $SNAP_COMMON/var/log/netbird
 
 parts:
   netbird:
