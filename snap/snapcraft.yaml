@@ -35,6 +35,8 @@ layout:
     bind: $SNAP_COMMON
   /var/log/netbird:
     bind: $SNAP_COMMON/var/log/netbird
+  /var/lib/netbird:
+    bind: $SNAP_COMMON/var/lib/netbird
 
 parts:
   netbird:
