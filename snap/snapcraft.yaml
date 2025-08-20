@@ -42,7 +42,7 @@ parts:
   netbird:
     plugin: go
     source: https://github.com/netbirdio/netbird.git
-    source-tag: "v0.54.0"
+    source-tag: "v0.54.2"
     build-snaps: [go]
     build-packages:
       - libayatana-appindicator3-dev
