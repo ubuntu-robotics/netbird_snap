@@ -85,7 +85,7 @@ jobs:
     needs: [snap-test]
     strategy:
       matrix:
-        architectures: [amd64, arm64, riscv64]
+        architectures: [amd64, arm64] # riscv64
     steps:
     - uses: actions/download-artifact@v4
       with:
