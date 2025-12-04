@@ -1,0 +1,10 @@
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor-update-tickets:
+    uses: canonical/robotics-actions-workflows/.github/workflows/bump-snap-version.yaml@copilot/create-reusable-workflow
+    with:
+      pr-assignee: "giusebar"
