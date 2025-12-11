@@ -5,6 +5,4 @@ on:
 
 jobs:
   monitor-update-tickets:
-    uses: canonical/robotics-actions-workflows/.github/workflows/bump-snap-version.yaml@copilot/create-reusable-workflow
-    with:
-      pr-assignee: "giusebar"
+    uses: canonical/robotics-actions-workflows/.github/workflows/bump-snap-version.yaml
