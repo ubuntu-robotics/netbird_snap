@@ -23,13 +23,11 @@ description: |
 
 
   NetBird log, config and socket files are stored in /var/snap/netbird/common
-
 confinement: strict
-
 architectures:
   - build-on: [amd64]
   - build-on: [arm64]
-  # - build-on: [riscv64]
+# - build-on: [riscv64]
 
 layout:
   /etc/netbird:
@@ -38,12 +36,11 @@ layout:
     bind: $SNAP_COMMON/var/log/netbird
   /var/lib/netbird:
     bind: $SNAP_COMMON/var/lib/netbird
-
 parts:
   netbird:
     plugin: go
     source: https://github.com/netbirdio/netbird.git
-    source-tag: "v0.60.4"
+    source-tag: "v0.61.2"
     build-snaps: [go]
     build-packages:
       - libayatana-appindicator3-dev
@@ -83,18 +80,15 @@ parts:
     stage:
       - bin/netbird
       - etc/bash_completion.d
-
   local-files:
     plugin: dump
     source: snap/local/
     organize:
       '*.bash': bin/
-
 apps:
   netbird:
     command: bin/netbird
     completer: etc/bash_completion.d/snap.netbird
-
   service-run:
     command: bin/netbird_service_launcher.bash
     daemon: simple
