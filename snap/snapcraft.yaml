@@ -63,11 +63,9 @@ parts:
       craftctl set version="$version"
       craftctl set grade="stable"
     override-build: |
-      # Change default socket location across old/new upstream layouts
-      for entry in client/cmd/root.go client/ui/client_ui.go client/ssh/client/client.go client/ui/grpc.go; do
-        if [ -f "$entry" ]; then
-          sed -i "s|unix:///var/run/netbird.sock|unix:///var/snap/netbird/common/netbird.sock|" "$entry"
-        fi
+      # Change default socket location for netbird v0.76.3
+      for entry in client/cmd/root.go client/ssh/client/client.go client/ui/grpc.go; do
+        sed -i "s|unix:///var/run/netbird.sock|unix:///var/snap/netbird/common/netbird.sock|" "$entry"
       done
 
       sed -i "s|development|$(craftctl get version)|" version/version.go
