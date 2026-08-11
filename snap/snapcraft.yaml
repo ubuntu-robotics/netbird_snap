@@ -72,7 +72,10 @@ parts:
 
       sed -i "s|development|$(craftctl get version)|" version/version.go
 
-      craftctl default
+      # Build only the CLI binary; building all packages now fails in v0.76.3
+      # because client/ui embeds frontend/dist, which is not present in source tarballs.
+      mkdir -p "$CRAFT_PART_INSTALL/bin"
+      go build -o "$CRAFT_PART_INSTALL/bin/client" ./client
 
       # Setup bash completion
       mkdir -p $CRAFT_PART_INSTALL/etc/bash_completion.d/
