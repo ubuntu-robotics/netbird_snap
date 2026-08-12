@@ -52,7 +52,7 @@ parts:
       craftctl set version="$version"
       craftctl set grade="stable"
     override-build: |
-      # Change every v0.76.3 default socket location
+      # Change every default socket location
       for entry in client/cmd/root.go client/ssh/client/client.go client/server/ssh_gate.go client/ui/grpc.go; do
         sed -i "s|unix:///var/run/netbird.sock|unix:///var/snap/netbird/common/netbird.sock|" "$entry"
       done
