@@ -42,17 +42,6 @@ parts:
     source: https://github.com/netbirdio/netbird.git
     source-tag: "v0.77.0"
     build-snaps: [go]
-    build-packages:
-      - libayatana-appindicator3-dev
-      - libgl1-mesa-dev
-      - libglx-dev
-      - libx11-dev
-      - libxcursor-dev
-      - libxi-dev
-      - libxinerama-dev
-      - libxrandr-dev
-      - libxxf86vm-dev
-      - pkg-config
     override-pull: |
       craftctl default
 
@@ -63,14 +52,18 @@ parts:
       craftctl set version="$version"
       craftctl set grade="stable"
     override-build: |
-      # Change default socket location
-      for entry in client/cmd/root.go client/ui/client_ui.go; do
+      # Change every default socket location
+      for entry in client/cmd/root.go client/ssh/client/client.go client/server/ssh_gate.go client/ui/grpc.go; do
         sed -i "s|unix:///var/run/netbird.sock|unix:///var/snap/netbird/common/netbird.sock|" "$entry"
       done
 
       sed -i "s|development|$(craftctl get version)|" version/version.go
 
-      craftctl default
+      # The Go plugin default builds ./..., including the desktop UI, which
+      # requires separately generated frontend assets. Build only the CLI
+      # binary packaged by this snap.
+      mkdir -p "$CRAFT_PART_INSTALL/bin"
+      CGO_ENABLED=0 go build -o "$CRAFT_PART_INSTALL/bin/client" ./client
 
       # Setup bash completion
       mkdir -p $CRAFT_PART_INSTALL/etc/bash_completion.d/
